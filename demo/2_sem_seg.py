@@ -181,5 +181,5 @@ if __name__ == "__main__":
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(point.coord.cpu().detach().numpy())
     pcd.colors = o3d.utility.Vector3dVector(color / 255)
-    o3d.visualization.draw_geometries([pcd])
-    # o3d.io.write_point_cloud("sem_seg.ply", pcd)
+    # o3d.visualization.draw_geometries([pcd])
+    o3d.io.write_point_cloud("sem_seg.ply", pcd)

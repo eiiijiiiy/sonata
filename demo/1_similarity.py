@@ -197,7 +197,7 @@ if __name__ == "__main__":
                 verbose=False,
             )
         )
-        o3d.visualization.draw_geometries(pcds)
-        # o3d.io.write_point_cloud("similarity_global.ply", pcds[0])
-        # o3d.io.write_point_cloud("similarity_local.ply", pcds[1])
-        # o3d.io.write_line_set("similarity_line.ply", pcds[2])
+        # o3d.visualization.draw_geometries(pcds)
+        o3d.io.write_point_cloud("similarity_global.ply", pcds[0])
+        o3d.io.write_point_cloud("similarity_local.ply", pcds[1])
+        o3d.io.write_line_set("similarity_line.ply", pcds[2])

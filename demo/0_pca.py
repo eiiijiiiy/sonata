@@ -96,11 +96,11 @@ if __name__ == "__main__":
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(original_coord)
     pcd.colors = o3d.utility.Vector3dVector(original_pca_color.cpu().detach().numpy())
-    o3d.visualization.draw_geometries([pcd])
+    # o3d.visualization.draw_geometries([pcd])
     # or
     # o3d.visualization.draw_plotly([pcd])
 
     # pcd = o3d.geometry.PointCloud()
     # pcd.points = o3d.utility.Vector3dVector(point.coord.cpu().detach().numpy())
     # pcd.colors = o3d.utility.Vector3dVector(pca_color_.cpu().detach().numpy())
-    # o3d.io.write_point_cloud("pca.ply", pcd)
+    o3d.io.write_point_cloud("pca.ply", pcd)

@@ -630,6 +630,7 @@ class PointTransformerV3(PointModule, PyTorchModelHubMixin):
             x.item() for x in torch.linspace(0, drop_path, sum(enc_depths))
         ]
         self.enc = PointSequential()
+        self.lst_head = nn.Linear(enc_channels[-1], 1)
         for s in range(self.num_stages):
             enc_drop_path_ = enc_drop_path[
                 sum(enc_depths[:s]) : sum(enc_depths[: s + 1])
@@ -752,7 +753,11 @@ class PointTransformerV3(PointModule, PyTorchModelHubMixin):
         point = self.enc(point)
         if not self.enc_mode:
             point = self.dec(point)
-        return point
+        
+        feat = point.feat.mean(dim=0)
+        lst = self.lst_head(feat)
+
+        return point, lst
 
 
 def load(
@@ -787,9 +792,9 @@ def load(
 
     if ckpt_only:
         return ckpt
-
+    
     model = PointTransformerV3(**ckpt["config"])
-    model.load_state_dict(ckpt["state_dict"])
+    model.load_state_dict(ckpt["state_dict"], strict=False)
     n_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print(f"Model params: {n_parameters / 1e6:.2f}M")
     return model
